@@ -1,0 +1,15 @@
+<div class="display-6 text-center text-uppercase fw-bold pb-5 pt-5 position-relative">
+    {{ title }}
+</div>
+<div id="menu-container" class="float-start">
+    <ul id="menu" class="list-group ms-4">
+        <li class="list-group-item p-0"><a [routerLink]="['/']" class="d-block text-black w-100 p-2 text-center">Strona główna</a></li>
+        <li class="list-group-item p-0"><a [routerLink]="['/kamery']" class="d-block text-black w-100 p-2 text-center">Kamery</a></li>
+    </ul>
+</div>
+<div id="content" class="float-start ms-4">
+    <router-outlet></router-outlet>
+</div>
+<div id="footer">
+    
+</div>

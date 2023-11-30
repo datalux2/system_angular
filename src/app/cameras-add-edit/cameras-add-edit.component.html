@@ -1,0 +1,195 @@
+<div class="alert alert-success" role="alert" *ngIf="message && status">
+    {{ message }}
+</div>
+<div class="alert alert-danger" role="alert" *ngIf="message && !status">
+    {{ message }}
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-5">
+                <div class="card-header">
+                    <h1 *ngIf="id === undefined">
+                        {{ subtitle_add }}
+                    </h1>
+                    <h1 *ngIf="id">
+                        {{ subtitle_edit }}
+                    </h1>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="applyForm" (submit)="submitAddApplication()" *ngIf="id === undefined">
+                        <div class="mb-3 form-group">
+                            <label for="name">Nazwa:</label>
+                            <input id="name" type="text" formControlName="name" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['name'].touched || submitted) && applyForm.controls['name'].errors?.['required']">
+                                Nazwa jest wymagana
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="status">Status:</label>
+                            <select id="status" formControlName="status" class="form-control">
+                                <option value="1">włączony</option>
+                                <option value="0">wyłączony</option>
+                            </select>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['status'].touched || submitted) && applyForm.controls['status'].errors?.['required']">
+                                Status jest wymagany
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="ip">Adres IP:</label>
+                            <input id="ip" type="text" formControlName="ip" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['ip'].touched || submitted) && applyForm.controls['ip'].errors?.['required']">
+                                Adres IP jest wymagany
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['ip'].touched || submitted) && applyForm.controls['ip'].errors?.['pattern']">
+                                Adres IP musi mieć odpowiedni format
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="nr_on_plan">Numer na planie:</label>
+                            <input id="nr_on_plan" type="number" formControlName="nr_on_plan" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['nr_on_plan'].touched || submitted) && applyForm.controls['nr_on_plan'].errors?.['required']">
+                                Numer na planie jest wymagany
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['nr_on_plan'].touched || submitted) && applyForm.controls['nr_on_plan'].errors?.['pattern']">
+                                Numer na planie musi być liczbą całkowitą
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['nr_on_plan'].touched || submitted) && applyForm.controls['nr_on_plan'].errors?.['min']">
+                                Numer na planie musi być liczbą większą niż 0
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="type_id">Type ID:</label>
+                            <input id="type_id" type="number" formControlName="type_id" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['type_id'].touched || submitted) && applyForm.controls['type_id'].errors?.['required']">
+                                Type ID jest wymagany
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['type_id'].touched || submitted) && applyForm.controls['type_id'].errors?.['pattern']">
+                                Type ID musi być liczbą całkowitą
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['type_id'].touched || submitted) && applyForm.controls['type_id'].errors?.['min']">
+                                Type ID musi być liczbą większą niż 0
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="floor">Piętro:</label>
+                            <input id="floor" type="number" formControlName="floor" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['floor'].touched || submitted) && applyForm.controls['floor'].errors?.['required']">
+                                Piętro jest wymagane
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['floor'].touched || submitted) && applyForm.controls['floor'].errors?.['pattern']">
+                                Piętro musi być liczbą całkowitą
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['floor'].touched || submitted) && applyForm.controls['floor'].errors?.['min']">
+                                Piętro musi być liczbą co najmniej 0
+                            </span>
+                        </div>
+                        <button type="submit" class="primary">Dodaj</button>
+                        <img src="/assets/spinner2.gif" *ngIf="isLoadingAdd"/>
+                    </form>
+                    
+                    <form class="form" [formGroup]="applyForm" (submit)="submitEditApplication()" *ngIf="id && form_view && !isLoading">
+                        <div class="mb-3 form-group">
+                            <label for="name">Nazwa:</label>
+                            <input id="name" type="text" formControlName="name" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['name'].touched || submitted) && applyForm.controls['name'].errors?.['required']">
+                                Nazwa jest wymagana
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="status">Status:</label>
+                            <select id="status" formControlName="status" class="form-control">
+                                <option value="1">włączony</option>
+                                <option value="0">wyłączony</option>
+                            </select>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['status'].touched || submitted) && applyForm.controls['status'].errors?.['required']">
+                                Status jest wymagany
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="ip">Adres IP:</label>
+                            <input id="ip" type="text" formControlName="ip" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['ip'].touched || submitted) && applyForm.controls['ip'].errors?.['required']">
+                                Adres IP jest wymagany
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['ip'].touched || submitted) && applyForm.controls['ip'].errors?.['pattern']">
+                                Adres IP musi mieć odpowiedni format
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="nr_on_plan">Numer na planie:</label>
+                            <input id="nr_on_plan" type="number" formControlName="nr_on_plan" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['nr_on_plan'].touched || submitted) && applyForm.controls['nr_on_plan'].errors?.['required']">
+                                Numer na planie jest wymagany
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['nr_on_plan'].touched || submitted) && applyForm.controls['nr_on_plan'].errors?.['pattern']">
+                                Numer na planie musi być liczbą całkowitą
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['nr_on_plan'].touched || submitted) && applyForm.controls['nr_on_plan'].errors?.['min']">
+                                Numer na planie musi być liczbą większą niż 0
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="type_id">Type ID:</label>
+                            <input id="type_id" type="number" formControlName="type_id" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['type_id'].touched || submitted) && applyForm.controls['type_id'].errors?.['required']">
+                                Type ID jest wymagany
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['type_id'].touched || submitted) && applyForm.controls['type_id'].errors?.['pattern']">
+                                Type ID musi być liczbą całkowitą
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['type_id'].touched || submitted) && applyForm.controls['type_id'].errors?.['min']">
+                                Type ID musi być liczbą większą niż 0
+                            </span>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="floor">Piętro:</label>
+                            <input id="floor" type="number" formControlName="floor" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['floor'].touched || submitted) && applyForm.controls['floor'].errors?.['required']">
+                                Piętro jest wymagane
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['floor'].touched || submitted) && applyForm.controls['floor'].errors?.['pattern']">
+                                Piętro musi być liczbą całkowitą
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="(applyForm.controls['floor'].touched || submitted) && applyForm.controls['floor'].errors?.['min']">
+                                Piętro musi być liczbą co najmniej 0
+                            </span>
+                        </div>
+                        <button type="submit" class="primary">Aktualizuj</button>
+                        <img src="/assets/spinner2.gif" *ngIf="isLoadingEdit"/>
+                    </form>
+                    
+                    <div *ngIf="isLoading" class="d-flex flex-column justify-content-center align-items-center">
+                        <img src="/assets/spinner.gif"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

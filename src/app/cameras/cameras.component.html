@@ -1,0 +1,99 @@
+<div class="alert alert-success" role="alert" *ngIf="message && status">
+    {{ message }}
+</div>
+<div class="alert alert-danger" role="alert" *ngIf="message && !status">
+    {{ message }}
+</div>
+<img src="/assets/spinner.gif" class="spinner" *ngIf="isLoadingDelete || isLoading"/>
+<h1>
+    {{subtitle}}
+</h1>
+<div id="add_link" class="mt-5 mb-5">
+    <a [routerLink]="['/kamery/dodaj']">Dodaj książkę</a>
+</div>
+
+<!--<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+  </mat-form-field>
+</div>-->
+
+<div class="example-container mat-elevation-z8 mb-5" *ngIf="camerasList.length; else nodata">
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  <mat-table [dataSource]="dataSource" matSort>
+      
+    <ng-container matColumnDef="lp">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> L.p. </mat-header-cell>
+      <mat-cell *matCellDef="let row; let i = index"> {{ ((currentPage * pageSize) + 1 + i) }} </mat-cell>
+    </ng-container>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+      <mat-cell *matCellDef="let row"> @if(row.status) { włączony } @else { wyłączony }</mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="ip">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Adres IP </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ip}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="nr_on_plan">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Numer na planie </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.nr_on_plan}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="type_id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Type ID </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.type_id}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="floor">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Piętro </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.floor}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="create_datetime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Data utworzenia </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.create_datetime}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="update_datetime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Data aktualizacji </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.update_datetime}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Akcje </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="d-block p-2">
+          <a [routerLink]="['/kamery/edytuj', row.id]" class="d-block mb-2">Edytuj</a>
+          <a class="d-block delete_link" href="javascript: void(0);" (click)="clickHandler(row.id)">Usuń</a>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="pageSizeOptions" #paginator [length]="totalRows" 
+      [pageIndex]="currentPage" [pageSize]="pageSize" (page)="pageChanged($event)" aria-label="Select page">
+  </mat-paginator>
+</div>
+
+<ng-template #nodata>
+    <div>
+        Brak danych
+    </div>
+</ng-template>

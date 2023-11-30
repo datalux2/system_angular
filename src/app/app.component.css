@@ -1,0 +1,50 @@
+#menu-container
+{
+    width: 15%;
+}
+
+#content
+{
+    width: 80%;
+}
+
+#menu li
+{
+    background-color: #f1f1f1;
+}
+
+#menu li a:hover, #menu li.active a
+{
+    color: white!important;
+}
+
+#menu li:hover, #menu li.active
+{
+    background-color: #04AA6D;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+}
+
+form label
+{
+    width: 100px;
+}
+
+form > div > div
+{
+    margin-bottom: 20px;
+}
+
+form
+{
+    width: 300px;
+}
